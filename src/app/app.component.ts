@@ -12,8 +12,8 @@ export class AppComponent {
   selectedFile: File;
   http: HttpClient;
 
-  constructor(private http: HttpClient) {
-    this.http = http
+  constructor(private http_: HttpClient) {
+    this.http = http_
   }
 
   onFileChanged(event) {
