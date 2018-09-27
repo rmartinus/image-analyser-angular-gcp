@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Deploying to Google Cloud Platform
+
+* Build the project: `$ ng build --prod`
+* Create a new GCP project called `my-image-analyser-angular`
+* Create a Google Storage bucket called `my-image-analyser-angular`
+* Upload `app.yaml` and `dist/` to the bucket
+* Use Google Shell and run these commands:
+  * `$ mkdir my-image-analyser-angular`
+  * `$ gsutil rsync -r gs://my-image-analyser-angular ./my-image-analyser-angular`
+* Lastly, deploy the app:
+  * `$ cd my-image-analyser-angular/`
+  * `$ gcloud app deploy`
+  * Choose region eg. `australia-southeast1`
+
