@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +9,13 @@ import { HttpClient } from '@angular/common/http';
 
 export class AppComponent {
   title = 'image-analyser-angular-gcp';
-  selectedFile: File;
-  http: HttpClient;
+  selectedFile: File = null;
 
-  constructor(private http_: HttpClient) {
-    this.http = http_
-  }
+  constructor(private http: HttpClient) {}
 
-  onFileChanged(event) {
-    this.selectedFile = event.target.files[0]
+  onFileSelected(event) {
+    console.log(event);
+    this.selectedFile = <File>event.target.files[0];
   }
 
   onUpload() {
@@ -29,7 +27,11 @@ export class AppComponent {
       observe: 'events'
     })
     .subscribe(event => {
-      console.log(event); // handle event here
+      if (event.type === HttpEventType.UploadProgress) {
+        console.log('Upload progress: ' + Math.round(event.loaded / event.total * 100) + '%';
+      } else if (event.type === HttpEventType.Response) {
+        console.log(event);
+      }
     });
   }
 }
