@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { UploadImageService } from '../shared/upload-image.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-upload-image',
   templateUrl: './upload-image.component.html',
-  styleUrls: ['./upload-image.component.css']
+  styleUrls: ['./upload-image.component.css'],
+  providers: [UploadImageService]
 })
 export class UploadImageComponent implements OnInit {
-  imageUrl : string = "/assets/img/image-regular.png";
-  selectedFile : File = null;
+  imageUrl: string = "/assets/img/image-regular.png";
+  selectedFile: File = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private imageService: UploadImageService) {}
 
   ngOnInit() {
   }
 
-  onFileSelected(file : FileList) {
+  onFileSelected(file: FileList) {
     this.selectedFile = file.item(0);
 
     var reader = new FileReader();
@@ -25,20 +27,18 @@ export class UploadImageComponent implements OnInit {
     reader.readAsDataURL(this.selectedFile);
   }
 
-  onUpload() {
-    const uploadData = new FormData();
-    uploadData.append('image', this.selectedFile, this.selectedFile.name);
-
-    this.http.post('https://my-image-analyser.appspot.com/v1/analyse', uploadData,  {
-      reportProgress: true,
-      observe: 'events'
-    })
-    .subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        console.log('Upload progress: ' + Math.round(event.loaded / event.total * 100) + '%');
-      } else if (event.type === HttpEventType.Response) {
-        console.log(event);
-      }
-    });
+  onSubmit(Caption, Image) {
+    this.imageService.uploadFile(Caption.value, this.selectedFile)
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          console.log('Upload progress: ' + Math.round(event.loaded / event.total * 100) + '%');
+        } else if (event.type === HttpEventType.Response) {
+          console.log(event);
+          console.log('done');
+          Caption.value = null;
+          Image.value = null;
+          this.imageUrl = "/assets/img/image-regular.png";
+        }
+      );
   }
 }

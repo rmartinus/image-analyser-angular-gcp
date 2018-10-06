@@ -4,7 +4,7 @@
       <div class="card-panel teal lighten-2">
         <h4 class="center white-text">Image Library</h4>
       </div>
-      <form #imageForm = ngForm>
+      <form #imageForm = ngForm (ngSubmit)="onSubmit(Caption, Image)">
         <div class="row">
           <div class="input-field col s12">
             <input type="text" #Caption ngModel name="Caption" id="Caption" required>
@@ -14,7 +14,7 @@
         <img [src]="imageUrl" style="width:250px;height:200px">
         <input type="file" #Image accept="image/*" (change)="onFileSelected($event.target.files)">
         <div>
-          <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid" (click)="onUpload()">Submit</button>
+          <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
         </div>
       </form>
     </div>
