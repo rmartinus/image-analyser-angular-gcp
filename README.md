@@ -29,9 +29,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Deploying to Google Cloud Platform
 
 * Build the project: `$ ng build --prod`
+* Go to dist folder and rename image-analyser-angular-gcp folder to dist: `$ mv image-analyser-angular-gcp/ dist`
 * Create a new GCP project called `my-image-analyser-angular`
 * Create a Google Storage bucket called `my-image-analyser-angular`
-* Upload `app.yaml` and `dist/` to the bucket
+* Upload `app.yaml` and the child `dist/` folder to the bucket
 * Use Google Shell and run these commands:
   * `$ mkdir my-image-analyser-angular`
   * `$ gsutil rsync -r gs://my-image-analyser-angular ./my-image-analyser-angular`
