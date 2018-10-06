@@ -27,7 +27,7 @@ export class UploadImageComponent implements OnInit {
     reader.readAsDataURL(this.selectedFile);
   }
 
-  onSubmit(Caption, Image) {
+  onSubmit(Caption, Image, Response) {
     this.imageService.uploadFile(Caption.value, this.selectedFile)
       .subscribe(event => {
           if (event.type === HttpEventType.UploadProgress) {
@@ -35,6 +35,7 @@ export class UploadImageComponent implements OnInit {
           } else if (event.type === HttpEventType.Response) {
             console.log(event);
             console.log('done');
+            Response.value = JSON.stringify(event.body);
             Caption.value = null;
             Image.value = null;
             this.imageUrl = "/assets/img/image-regular.png";
