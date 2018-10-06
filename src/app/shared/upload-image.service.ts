@@ -15,6 +15,6 @@ export class UploadImageService {
     return this.http.post(endpoint, uploadData, {
       reportProgress: true,
       observe: 'events'
-    }));
+    });
   }
 }

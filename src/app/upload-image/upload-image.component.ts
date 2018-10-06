@@ -30,14 +30,15 @@ export class UploadImageComponent implements OnInit {
   onSubmit(Caption, Image) {
     this.imageService.uploadFile(Caption.value, this.selectedFile)
       .subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          console.log('Upload progress: ' + Math.round(event.loaded / event.total * 100) + '%');
-        } else if (event.type === HttpEventType.Response) {
-          console.log(event);
-          console.log('done');
-          Caption.value = null;
-          Image.value = null;
-          this.imageUrl = "/assets/img/image-regular.png";
+          if (event.type === HttpEventType.UploadProgress) {
+            console.log('Upload progress: ' + Math.round(event.loaded / event.total * 100) + '%');
+          } else if (event.type === HttpEventType.Response) {
+            console.log(event);
+            console.log('done');
+            Caption.value = null;
+            Image.value = null;
+            this.imageUrl = "/assets/img/image-regular.png";
+          }
         }
       );
   }
