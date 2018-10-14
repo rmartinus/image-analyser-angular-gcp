@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadImageService } from '../shared/upload-image.service';
 import { HttpEventType } from '@angular/common/http';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 
 @Component({
   selector: 'app-upload-image',
@@ -12,19 +13,26 @@ export class UploadImageComponent implements OnInit {
   imageUrl: string = "/assets/img/image-regular.png";
   selectedFile: File = null;
 
-  constructor(private imageService: UploadImageService) {}
+  constructor(private imageService: UploadImageService, private ng2ImgMax: Ng2ImgMaxService) {}
 
   ngOnInit() {
   }
 
   onFileSelected(file: FileList) {
-    this.selectedFile = file.item(0);
+    this.ng2ImgMax.compressImage(file.item(0), 0.075).subscribe(
+      result => {
+        this.selectedFile = result;
+        var reader = new FileReader();
+        reader.onload = (event:any) => {
+          this.imageUrl = event.target.result;
+        }
+        reader.readAsDataURL(this.selectedFile);
+      },
+      error => {
+        console.log('😢 Oh no!', error);
+      }
+    );
 
-    var reader = new FileReader();
-    reader.onload = (event:any) => {
-      this.imageUrl = event.target.result;
-    }
-    reader.readAsDataURL(this.selectedFile);
   }
 
   onSubmit(Caption, Image, Response) {

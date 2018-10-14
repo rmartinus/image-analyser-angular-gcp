@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { UploadImageComponent } from './upload-image/upload-image.component';
+import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    Ng2ImgMaxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
