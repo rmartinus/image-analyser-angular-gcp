@@ -43,7 +43,7 @@ export class UploadImageComponent implements OnInit {
           } else if (event.type === HttpEventType.Response) {
             console.log(event);
             console.log('done');
-            var hashTags = generateHashTags(event.body);
+            var hashTags = this.generateHashTags(event.body);
             Hashtags.value = hashTags;
             Caption.value = null;
             Image.value = null;
@@ -53,7 +53,7 @@ export class UploadImageComponent implements OnInit {
       );
   }
 
-  function generateHashTags(obj) {
+  generateHashTags(obj): string {
     var sortable=[];
     for(var key in obj) {
       if(obj.hasOwnProperty(key)) {
