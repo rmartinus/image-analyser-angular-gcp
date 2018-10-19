@@ -35,7 +35,7 @@ export class UploadImageComponent implements OnInit {
 
   }
 
-  onSubmit(Caption, Image, Response) {
+  onSubmit(Caption, Image, Hashtags) {
     this.imageService.uploadFile(Caption.value, this.selectedFile)
       .subscribe(event => {
           if (event.type === HttpEventType.UploadProgress) {
@@ -43,7 +43,8 @@ export class UploadImageComponent implements OnInit {
           } else if (event.type === HttpEventType.Response) {
             console.log(event);
             console.log('done');
-            Response.value = JSON.stringify(event.body);
+            var hashTags = generateHashTags(event.body);
+            Hashtags.value = hashTags;
             Caption.value = null;
             Image.value = null;
             this.imageUrl = "/assets/img/image-regular.png";
@@ -51,4 +52,22 @@ export class UploadImageComponent implements OnInit {
         }
       );
   }
+
+  function generateHashTags(obj) {
+    var sortable=[];
+    for(var key in obj) {
+      if(obj.hasOwnProperty(key)) {
+        sortable.push(['#' + key.replace(/ /g,''), obj[key]]);
+      }
+    }
+    sortable.sort((a, b) => {
+      return b[1]-a[1];
+    });
+
+    var hashTags = "";
+    for (var i in sortable) {
+      hashTags += sortable[i][0] + " ";
+    }
+    return hashTags;
+	}
 }

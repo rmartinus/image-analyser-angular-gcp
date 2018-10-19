@@ -4,7 +4,7 @@
       <div class="card-panel teal lighten-2">
         <h4 class="center white-text">Image Analyser</h4>
       </div>
-      <form #imageForm = ngForm (ngSubmit)="onSubmit(Caption, Image, Response)">
+      <form #imageForm = ngForm (ngSubmit)="onSubmit(Caption, Image, Hashtags)">
         <div class="row">
           <div class="input-field col s12">
             <input type="text" #Caption ngModel name="Caption" id="Caption" required>
@@ -12,13 +12,13 @@
           </div>
         </div>
         <img [src]="imageUrl" id="ImagePreview">
-        <input type="file" #Image accept="image/*" (change)="onFileSelected($event.target.files)">
+        <input class="row" type="file" #Image accept="image/*" (change)="onFileSelected($event.target.files)">
         <div class="row">
           <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
         </div>
         <div class="row">
-          Response:
-          <textarea #Response ngModel name="Response" id="Response" disabled></textarea>
+          Hashtags:
+          <textarea #Hashtags ngModel name="Hashtags" id="Hashtags" disabled></textarea>
         </div>
       </form>
     </div>
