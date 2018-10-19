@@ -1,6 +1,7 @@
 # ImageAnalyserAngularGcp
 
 Upload an image file and get hashtags automatically generated for your social media feed!
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3.
 
 ## Development server
