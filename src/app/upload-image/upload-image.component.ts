@@ -19,7 +19,7 @@ export class UploadImageComponent implements OnInit {
   }
 
   onFileSelected(file: FileList) {
-    this.ng2ImgMax.compressImage(file.item(0), 0.075).subscribe(
+    this.ng2ImgMax.resizeImage(file.item(0), 10000, 300).subscribe(
       result => {
         this.selectedFile = result;
         var reader = new FileReader();
