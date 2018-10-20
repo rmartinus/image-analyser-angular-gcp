@@ -57,7 +57,7 @@ export class UploadImageComponent implements OnInit {
     var sortable=[];
     for(var key in obj) {
       if(obj.hasOwnProperty(key)) {
-        sortable.push(['#' + key.replace(/ /g,''), obj[key]]);
+        sortable.push(['#' + key.replace(/\s/g,'').toLowerCase(), obj[key]]);
       }
     }
     sortable.sort((a, b) => {
